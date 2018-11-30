@@ -4,7 +4,7 @@
 <?php include(dirname(__DIR__).'/head.html') ?>
 
 <body>
-
+<?php include(dirname(__DIR__).'/Template/login_panel.php') ?>
 <h1>UPLOAD</h1>
 
 <?php foreach($message as $item): ?>

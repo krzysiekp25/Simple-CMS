@@ -3,6 +3,7 @@
 require_once('controllers/DefaultController.php');
 require_once('controllers/UploadController.php');
 require_once('controllers/PlayerController.php');
+require_once('controllers/ArticleController.php');
 
 class Routing
 {
@@ -30,6 +31,10 @@ class Routing
             'player' => [
                 'controller' => 'PlayerController',
                 'action' => 'player'
+            ],
+            'article' => [
+                'controller' => 'ArticleController',
+                'action' => 'article'
             ]
         ];
     }
