@@ -5,6 +5,7 @@
 
 <body>
 <?php include(dirname(__DIR__).'/Template/login_panel.php') ?>
+<?php include(dirname(__DIR__).'/Template/menu.php') ?>
 <h1>HOMEPAGE</h1>
 <p>
     <?= $text ?>

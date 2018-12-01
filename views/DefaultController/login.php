@@ -4,7 +4,7 @@
 <?php include(dirname(__DIR__).'/head.html') ?>
 
 <body>
-
+<?php include(dirname(__DIR__).'/Template/menu.php') ?>
 <h1>LOGIN</h1>
 
 <?php if(isset($message)): ?>
