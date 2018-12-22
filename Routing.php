@@ -12,9 +12,9 @@ class Routing
     public function __construct()
     {
         $this->routes = [
-            'index' => [
+            'home' => [
                 'controller' => 'DefaultController',
-                'action' => 'index'
+                'action' => 'home'
             ],
             'login' => [
                 'controller' => 'DefaultController',
@@ -42,7 +42,7 @@ class Routing
     public function run()
     {
         $page = isset($_GET['page'])
-            && isset($this->routes[$_GET['page']]) ? $_GET['page'] : 'index';
+            && isset($this->routes[$_GET['page']]) ? $_GET['page'] : 'home';
 
         if ($this->routes[$page]) {
             $class = $this->routes[$page]['controller'];

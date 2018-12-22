@@ -4,13 +4,15 @@ if(isset($_SESSION) && !empty($_SESSION)) { ?>
         <?php
         print("Witaj: ");
         print_r($_SESSION);
-        print("<a href="."?page=logout".">Wyloguj</a>");
+        print("<a href=http://"."$_SERVER[HTTP_HOST]"."/"."?page=logout".">Wyloguj</a>");
         ?>
     </div>
 <?php } else { ?>
     <div>
         <?php
-        print("<a href="."?page=login".">Zaloguj</a>");
+        print("<a href=http://"."$_SERVER[HTTP_HOST]"."/"."?page=login".">Zaloguj</a>");
+        //$url = "http://$_SERVER[HTTP_HOST]/";
+        //header("Location: {$url}?page=home");
         ?>
     </div>
 <?php } ?>
