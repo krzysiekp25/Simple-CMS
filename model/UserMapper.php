@@ -28,12 +28,12 @@ class UserMapper
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            /*ob_start();
+            ob_start();
             var_dump($result);
-            error_log(ob_get_clean());*/
-            $role = $result['id_role'] != null ? new Role($result['id_role'], $result['role']): null;
-            $address = $result['id_address'] != null ? new Address($result['id_address'], $result['postal_code'], $result['street'], $result['locality'], $result['number']): null;
-            $user_details = $result['id_user_details'] != null ? new UserDetails($result['id_user_details'], $address, $result['name'], $result['surname'], $result['phone']): null;
+            error_log(ob_get_clean());
+            $role = new Role($result['id_role'], $result['role']);
+            $address = new Address($result['id_address'], $result['postal_code'], $result['street'], $result['locality'], $result['number']);
+            $user_details = new UserDetails($result['id_user_details'], $address, $result['name'], $result['surname'], $result['phone']);
             return new User($result['id_user'], $user_details, $role, $result['email'], $result['login'], $result['password'], $result['salt']);
         }
         catch(PDOException $e) {

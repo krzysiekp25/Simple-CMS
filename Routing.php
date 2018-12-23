@@ -4,6 +4,7 @@ require_once('controllers/DefaultController.php');
 require_once('controllers/UploadController.php');
 require_once('controllers/PlayerController.php');
 require_once('controllers/ArticleController.php');
+require_once('controllers/TestController.php');
 
 class Routing
 {
@@ -35,6 +36,10 @@ class Routing
             'article' => [
                 'controller' => 'ArticleController',
                 'action' => 'article'
+            ],
+            'test_session_mapper' => [
+                'controller' => 'TestController',
+                'action' => 'test_session_mapper'
             ]
         ];
     }

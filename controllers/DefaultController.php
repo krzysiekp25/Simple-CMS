@@ -1,6 +1,7 @@
 <?php
 
 require_once "AppController.php";
+require_once __DIR__."/../session/SessionController.php";
 
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
@@ -38,6 +39,9 @@ class DefaultController extends AppController
             if ($user->getPassword() !== $_POST['password']) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
+                $sessionController = new SessionController();
+                $sessionController->startSession();
+
                 $_SESSION["id"] = $user->getEmail();
                 $_SESSION["role"] = $user->getRole()->getRole();
 
