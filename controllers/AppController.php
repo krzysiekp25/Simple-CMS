@@ -1,15 +1,18 @@
 <?php
 
+require_once __DIR__.'/../session/SessionDBHandler.php';
 class AppController
 {
     const UPLOAD_DIRECTORY = '/public/upload/';
 
     private $request = null;
+    private $sessionHandler;
 
     public function __construct()
     {
         $this->request = strtolower($_SERVER['REQUEST_METHOD']);
-        session_start();
+        $this->sessionHandler = new SessionDBHandler();
+
     }
 
     public function isGet()

@@ -9,15 +9,13 @@
 class Session
 {
     private $id_session;
-    private $id_user;
     private $auditcd;
     private $auditmd;
     private $data;
 
-    public function __construct($id_session, $id_user, $auditcd, $auditmd, $data)
+    public function __construct($id_session, $auditcd, $auditmd, $data)
     {
         $this->id_session = $id_session;
-        $this->id_user = $id_user;
         $this->auditcd = $auditcd;
         $this->auditmd = $auditmd;
         $this->data = $data;
@@ -26,11 +24,6 @@ class Session
     public function getIdSession()
     {
         return $this->id_session;
-    }
-
-    public function getIdUser()
-    {
-        return $this->id_user;
     }
 
     public function getAuditcd()
@@ -51,11 +44,6 @@ class Session
     public function setIdSession($id_session): void
     {
         $this->id_session = $id_session;
-    }
-
-    public function setIdUser($id_user): void
-    {
-        $this->id_user = $id_user;
     }
 
     public function setData($data): void

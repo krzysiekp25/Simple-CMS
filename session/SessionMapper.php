@@ -17,7 +17,7 @@ class SessionMapper
         $this->database = new Database();
     }
 
-    public function getSession(
+    public function getSessionById(
         string $id_session
     ):Session {
         try {
@@ -31,10 +31,32 @@ class SessionMapper
             var_dump($result);
             error_log(ob_get_clean());
 
-            return new Session($result['id_session'], $result['id_user'], $result['auditcd'], $result['auditmd'], $result['data']);
+            return new Session($result['id_session'], $result['auditcd'], $result['auditmd'], $result['data']);
         }
         catch(PDOException $e) {
             return 'Error: ' . $e->getMessage();
         }
     }
+
+    public function replaceSession(string $id_session, string $data) {
+        $stmt = $this->database->connect()->prepare(
+            'REPLACE INTO session (id_session, data) VALUES (:id_session, :data)');
+        $stmt->bindParam(':id_session', $id_session, PDO::PARAM_STR);
+        $stmt->bindParam(':data', $data, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    public function deleteSession(string $id_session) {
+        $stmt = $this->database->connect()->prepare(
+            'DELETE FROM session WHERE id_session = :id_session');
+        $stmt->bindParam(':id_session', $id_session, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    public function getDatabase(): Database
+    {
+        return $this->database;
+    }
+
+
 }

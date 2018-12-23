@@ -40,6 +40,10 @@ class Routing
             'test_session_mapper' => [
                 'controller' => 'TestController',
                 'action' => 'test_session_mapper'
+            ],
+            'test_session_insert' => [
+                'controller' => 'TestController',
+                'action' => 'test_session_insert'
             ]
         ];
     }
