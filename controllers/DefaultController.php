@@ -5,6 +5,7 @@ require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
 require_once __DIR__.'/../model/Article.php';
 require_once __DIR__.'/../model/ArticleMapper.php';
+require_once __DIR__.'/../model/TopicMapper.php';
 
 
 class DefaultController extends AppController
@@ -16,11 +17,14 @@ class DefaultController extends AppController
 
     public function home()
     {
-        $mapper = new ArticleMapper();
+        $articleMapper = new ArticleMapper();
+        $topicMapper = new TopicMapper();
 
         $text = 'Hello there 👋';
-        $articleList = $mapper->getAllArticles();
-        $this->render('home', ['text' => $text, 'articleList' => $articleList]);
+        $articleList = $articleMapper->getAllArticles();
+        $topicList = $topicMapper->getAllTopics();
+
+        $this->render('home', ['text' => $text, 'articleList' => $articleList, 'topicList' => $topicList]);
     }
 
     public function login()
