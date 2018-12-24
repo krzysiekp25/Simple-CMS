@@ -3,6 +3,8 @@
 require_once "AppController.php";
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
+require_once __DIR__.'/../model/Article.php';
+require_once __DIR__.'/../model/ArticleMapper.php';
 
 
 class DefaultController extends AppController
@@ -14,9 +16,11 @@ class DefaultController extends AppController
 
     public function home()
     {
-        $text = 'Hello there 👋';
+        $mapper = new ArticleMapper();
 
-        $this->render('home', ['text' => $text]);
+        $text = 'Hello there 👋';
+        $articleList = $mapper->getAllArticles();
+        $this->render('home', ['text' => $text, 'articleList' => $articleList]);
     }
 
     public function login()
@@ -37,6 +41,7 @@ class DefaultController extends AppController
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
                 $_SESSION["id"] = $user->getEmail();
+                $_SESSION['name'] = $user->getUserDetails()->getName();
                 $_SESSION["role"] = $user->getRole()->getRole();
 
                 $url = "http://$_SERVER[HTTP_HOST]/";

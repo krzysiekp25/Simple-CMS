@@ -38,6 +38,7 @@ class SessionMapper
         }
     }
 
+    //todo try catch
     public function replaceSession(string $id_session, string $data) {
         $stmt = $this->database->connect()->prepare(
             'REPLACE INTO session (id_session, data) VALUES (:id_session, :data)');

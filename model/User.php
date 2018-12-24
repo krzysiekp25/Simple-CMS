@@ -67,7 +67,7 @@ class User
         $this->role = $role;
     }
 
-    public function getUserDetails()
+    public function getUserDetails() : UserDetails
     {
         return $this->user_details;
     }
