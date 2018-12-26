@@ -5,6 +5,7 @@ require_once('controllers/UploadController.php');
 require_once('controllers/PlayerController.php');
 require_once('controllers/ArticleController.php');
 require_once('controllers/TestController.php');
+require_once('controllers/LoginController.php');
 
 class Routing
 {
@@ -18,12 +19,16 @@ class Routing
                 'action' => 'home'
             ],
             'login' => [
-                'controller' => 'DefaultController',
+                'controller' => 'LoginController',
                 'action' => 'login'
             ],
             'logout' => [
-                'controller' => 'DefaultController',
+                'controller' => 'LoginController',
                 'action' => 'logout'
+            ],
+            'register' => [
+              'controller' => 'LoginController',
+              'action' => 'register'
             ],
             'upload' => [
                 'controller' => 'UploadController',

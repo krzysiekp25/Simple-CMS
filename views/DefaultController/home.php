@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 
 <?php include(dirname(__DIR__).'/head.html'); ?>
 <body>
