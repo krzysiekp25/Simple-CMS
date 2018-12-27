@@ -27,9 +27,9 @@ class SessionMapper
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            ob_start();
+            /*ob_start();
             var_dump($result);
-            error_log(ob_get_clean());
+            error_log(ob_get_clean());*/
 
             return new Session($result['id_session'], $result['auditcd'], $result['auditmd'], $result['data']);
         }

@@ -13,9 +13,8 @@ class User
     private $email;
     private $login;
     private $password;
-    private $salt;
 
-    public function __construct($id_user, $user_details, $role, $email, $login, $password, $salt)
+    public function __construct($id_user, $user_details, $role, $email, $login, $password)
     {
         $this->id_user = $id_user;
         $this->user_details = $user_details;
@@ -23,7 +22,6 @@ class User
         $this->email = $email;
         $this->login = $login;
         $this->password = $password;
-        $this->salt = $salt;
     }
 
 
@@ -85,16 +83,6 @@ class User
     public function setLogin($login): void
     {
         $this->login = $login;
-    }
-
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    public function setSalt($salt): void
-    {
-        $this->salt = $salt;
     }
 
 

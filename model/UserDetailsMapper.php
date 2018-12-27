@@ -15,15 +15,16 @@ class UserDetailsMapper
         $this->database = new Database();
     }
 
-    public function insertUserDetails(int $id_address, string $name, string $surname, int $phone) {
-        $stmt = $this->database->connect()->prepare(
+    public function insertUserDetails(int $id_address, string $name = null, string $surname = null, int $phone = null) {
+        $connection = $this->database->connect();
+        $stmt = $connection->prepare(
             'INSERT INTO user_details (id_address, name, surname, phone) VALUES (:id_address, :name, :surname, :phone)');
         $stmt->bindParam(':id_address', $id_address, PDO::PARAM_INT);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':surname', $surname, PDO::PARAM_STR);
         $stmt->bindParam(':phone', $phone, PDO::PARAM_INT);
         $stmt->execute();
-        return $this->database->connect()->lastInsertId();
+        return $connection->lastInsertId();
     }
 
 

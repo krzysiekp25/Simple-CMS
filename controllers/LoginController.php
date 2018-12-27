@@ -22,13 +22,13 @@ class LoginController extends AppController
 
         if ($this->isPost()) {
 
-            $user = $mapper->getUser($_POST['email']);
+            $user = $mapper->getUser($_POST['login']);
            /* var_dump($user);*/
             if(empty($user->getIdUser())) {
-                return $this->render('login', ['message' => ['Email not recognized']]);
+                return $this->render('login', ['message' => ['Login not recognized']]);
             }
 
-            if ($user->getPassword() !== $_POST['password']) {
+            if (!password_verify($_POST['password'], $user->getPassword())) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
                 $_SESSION["id"] = $user->getEmail();
@@ -60,12 +60,14 @@ class LoginController extends AppController
 
     public function register()
     {
-        $mapper = new UserMapper();
         if($this->isPost()) {
+            $mapper = new UserMapper();
             $emailErrorMessage = null;
             $loginErrorMessage = null;
             $passwordErrorMessage = null;
 
+            //todo sprawdzanie polityki haseł
+            //todo sprawdzanie czy mejl jest mejlem
             if($mapper->emailExist($_POST['email']))
             {
                 $emailErrorMessage = 'Podany email jest już zajęty';
@@ -80,7 +82,17 @@ class LoginController extends AppController
                 $this->render('register', ['emailErrorMessage' => $emailErrorMessage, 'loginErrorMessage' => $loginErrorMessage, 'passwordErrorMessage' => $passwordErrorMessage]);
                 exit();
             }
-            //todo szyfrowanie hasla i wywolanie stworzenia usera a po tym obsluge logowania z odszyfrowywaniem
+            $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+            $mapper->createUser($_POST['login'], $_POST['email'], $hash);
+
+            $user = $mapper->getUser($_POST['email']);
+            $_SESSION["id"] = $user->getEmail();
+            $_SESSION['name'] = $user->getUserDetails()->getName();
+            $_SESSION["role"] = $user->getRole()->getRole();
+
+            $this->render('successful_registration', ['message' => ['Rejestracja zakończona pomyślnie!']]);
+            exit();
         }
         $this->render('register');
     }

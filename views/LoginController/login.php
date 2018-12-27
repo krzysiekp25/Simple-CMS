@@ -29,7 +29,7 @@
                 <?php endforeach; ?>
             <?php endif; ?>
             <form action="?page=login" method="POST">
-                <input name="email" placeholder="email" required/>
+                <input name="login" placeholder="login" required/>
                 <input name="password" placeholder="password" type="password" required/>
                 <input type="submit" value="Sign in"/>
             </form>

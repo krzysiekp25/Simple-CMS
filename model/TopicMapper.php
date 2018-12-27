@@ -27,9 +27,9 @@ class TopicMapper
             foreach ($result as $rawArticle) {
                 array_push($topicList, new Topic($rawArticle['id_topic'], $rawArticle['topic']));
             }
-            ob_start();
+            /*ob_start();
             var_dump($topicList);
-            error_log(ob_get_clean());
+            error_log(ob_get_clean());*/
             return $topicList;
         }
         catch(PDOException $e) {

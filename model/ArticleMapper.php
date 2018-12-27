@@ -28,9 +28,9 @@ class ArticleMapper
                 $topic = new Topic($rawArticle['id_topic'], $rawArticle['topic']);
                 array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic));
             }
-            ob_start();
+            /*ob_start();
             var_dump($article);
-            error_log(ob_get_clean());
+            error_log(ob_get_clean());*/
             return $article;
         }
         catch(PDOException $e) {
