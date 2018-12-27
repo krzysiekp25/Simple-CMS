@@ -25,13 +25,13 @@ class LoginController extends AppController
             $user = $mapper->getUser($_POST['login']);
            /* var_dump($user);*/
             if(empty($user->getIdUser())) {
-                return $this->render('login', ['message' => ['Login not recognized']]);
+                return $this->render('login', ['loginErrorMessage' => 'Login not recognized']);
             }
 
             if (!password_verify($_POST['password'], $user->getPassword())) {
-                return $this->render('login', ['message' => ['Wrong password']]);
+                return $this->render('login', ['passwordErrorMessage' => 'Wrong password']);
             } else {
-                $_SESSION["id"] = $user->getEmail();
+                $_SESSION["id"] = $user->getIdUser();
                 $_SESSION['name'] = $user->getUserDetails()->getName();
                 $_SESSION["role"] = $user->getRole()->getRole();
 
@@ -86,8 +86,8 @@ class LoginController extends AppController
 
             $mapper->createUser($_POST['login'], $_POST['email'], $hash);
 
-            $user = $mapper->getUser($_POST['email']);
-            $_SESSION["id"] = $user->getEmail();
+            $user = $mapper->getUser($_POST['login']);
+            $_SESSION["id"] = $user->getIdUser();
             $_SESSION['name'] = $user->getUserDetails()->getName();
             $_SESSION["role"] = $user->getRole()->getRole();
 

@@ -29,61 +29,38 @@
     <div class="row content">
         <div class="col-sm-12 text-middle">
 
-            <h1>Logowanie</h1>
+            <h1>Dodaj temat</h1>
             <hr>
-            <form class="form-horizontal" role="form" method="POST" action="?page=login">
+            <form class="form-horizontal" role="form" method="POST" action="?page=add_topic">
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="login">Login</label>
+                        <label for="topic">Podaj temat</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                                <input type="text" name="login" class="form-control" id="login"
-                                       placeholder="Login" required autofocus>
+                                <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-folder-plus"></i></div>
+                                <input type="text" name="topicName" class="form-control" id="topicName"
+                                       placeholder="Temat" required autofocus>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                            <?php if(isset($loginErrorMessage)): ?><i class="fas fa-times">
-                                <?php print($loginErrorMessage) ?>
+                            <?php if(isset($topicErrorMessage)): ?><i class="fas fa-times">
+                                <?php print($topicErrorMessage) ?>
                                 </i><?php endif; ?>
                         </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-3 field-label-responsive">
-                        <label for="password">Password</label>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group has-danger">
-                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                                <input type="password" name="password" class="form-control" id="password"
-                                       placeholder="Password" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                            <?php if(isset($passwordErrorMessage)): ?><i class="fas fa-times">
-                                <?php print($passwordErrorMessage) ?>
-                                </i><?php endif; ?>
 
-                        </span>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-success"><i class="fas fa-sign-in-alt"></i> Zaloguj</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Dodaj</button>
                     </div>
                 </div>
             </form>

@@ -49,7 +49,7 @@
                     <div class="col-md-2">
                         <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                            <?php if(isset($loginErrorMessage)): ?><i class="fa fa-close">
+                            <?php if(isset($loginErrorMessage)): ?><i class="fas fa-times">
                                 <?php print($loginErrorMessage) ?>
                             </i><?php endif; ?>
                         </span>
@@ -73,7 +73,7 @@
                         <div class="form-control-feedback">
                         <span class="text-danger align-middle">
                             <!-- Put e-mail validation error messages here -->
-                            <?php if(isset($emailErrorMessage)): ?><i class="fa fa-close">
+                            <?php if(isset($emailErrorMessage)): ?><i class="fas fa-times">
                                 <?php print($emailErrorMessage) ?>
                             </i><?php endif; ?>
                         </span>
@@ -96,7 +96,7 @@
                     <div class="col-md-2">
                         <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                            <?php if(isset($passwordErrorMessage)): ?><i class="fa fa-close">
+                            <?php if(isset($passwordErrorMessage)): ?><i class="fas fa-times">
                                     <?php print($passwordErrorMessage) ?>
                             </i><?php endif; ?>
 
@@ -112,7 +112,7 @@
                         <div class="form-group">
                             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                 <div class="input-group-addon" style="width: 2.6rem">
-                                    <i class="fa fa-repeat"></i>
+                                    <i class="fas fa-redo-alt"></i>
                                 </div>
                                 <input type="password" name="password-confirmation" class="form-control"
                                        id="password-confirm" placeholder="Password" required>
@@ -133,7 +133,7 @@
 </div>
 
 <footer class="container-fluid text-center">
-    <p>Footer Text</p>
+    <?php include(dirname(__DIR__).'/Template/footer.php'); ?>
 </footer>
 
 </body>

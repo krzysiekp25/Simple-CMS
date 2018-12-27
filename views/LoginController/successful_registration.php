@@ -39,7 +39,7 @@
 </div>
 
 <footer class="container-fluid text-center">
-    <p>Footer Text</p>
+    <?php include(dirname(__DIR__).'/Template/footer.php'); ?>
 </footer>
 
 </body>

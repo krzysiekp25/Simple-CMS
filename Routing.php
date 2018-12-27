@@ -4,7 +4,6 @@ require_once('controllers/DefaultController.php');
 require_once('controllers/UploadController.php');
 require_once('controllers/PlayerController.php');
 require_once('controllers/ArticleController.php');
-require_once('controllers/TestController.php');
 require_once('controllers/LoginController.php');
 
 class Routing
@@ -42,13 +41,17 @@ class Routing
                 'controller' => 'ArticleController',
                 'action' => 'article'
             ],
-            'test_session_mapper' => [
-                'controller' => 'TestController',
-                'action' => 'test_session_mapper'
+            'add_article' => [
+                'controller' => 'ArticleController',
+                'action' => 'addArticle'
             ],
-            'test_session_insert' => [
-                'controller' => 'TestController',
-                'action' => 'test_session_insert'
+            'add_topic' => [
+                'controller' => 'ArticleController',
+                'action' => 'addTopic'
+            ],
+            'topic' => [
+                'controller' => 'ArticleController',
+                'action' => 'topic'
             ]
         ];
     }

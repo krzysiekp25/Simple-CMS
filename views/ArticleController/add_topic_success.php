@@ -21,7 +21,7 @@
     <div class="row content">
         <div class="col-sm-12 text-middle">
 
-            <h1>Wyloguj</h1>
+            <h1>Dodaj temat</h1>
             <hr>
             <?php if(isset($message)): ?>
                 <?php foreach($message as $item): ?>

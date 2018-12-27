@@ -37,4 +37,25 @@ class TopicMapper
         }
     }
 
+    public function topicExist(string $topicName) :bool {
+        $stmt = $this->database->connect()->prepare(
+            'SELECT * FROM topic where topic = :topicName');
+        $stmt->bindParam(":topicName", $topicName, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!$result) {
+            return false;
+        }
+        return true;
+    }
+
+    public function addTopic(string $topicName) :bool {
+        $connection = $this->database->connect();
+        $stmt = $connection->prepare(
+            'INSERT INTO topic (topic) VALUES (:topicName)');
+        $stmt->bindParam(':topicName', $topicName, PDO::PARAM_STR);
+        $stmt->execute();
+        return $connection->lastInsertId();
+    }
+
 }
