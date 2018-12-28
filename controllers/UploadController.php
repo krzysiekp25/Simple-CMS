@@ -2,7 +2,7 @@
 
 class UploadController extends AppController
 {
-    const MAX_FILE_SIZE = 1024*1024;
+    const MAX_FILE_SIZE = 1024 * 1024;
     const SUPPORTED_TYPES = ['video/mp4', 'video/mov'];
 
     private $message = [];
@@ -18,13 +18,13 @@ class UploadController extends AppController
 
             move_uploaded_file(
                 $_FILES['file']['tmp_name'],
-                dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['file']['name']
+                dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
             );
 
             $this->message[] = 'File uploaded.';
         }
 
-        $this->render('upload', [ 'message' => $this->message]);
+        $this->render('upload', ['message' => $this->message]);
     }
 
     private function validate(array $file): bool

@@ -2,7 +2,7 @@
 
 require_once 'Article.php';
 require_once 'Topic.php';
-require_once __DIR__.'/../Database.php';
+require_once __DIR__ . '/../Database.php';
 
 class ArticleMapper
 {
@@ -14,7 +14,8 @@ class ArticleMapper
         $this->database = new Database();
     }
 
-    public function getAllArticles() :array{
+    public function getAllArticles(): array
+    {
         try {
             $stmt = $this->database->connect()->prepare(
                 'SELECT * FROM article a inner join topic t on a.id_topic = t.id_topic inner join user u on a.owner = u.id_user');
@@ -26,19 +27,19 @@ class ArticleMapper
             foreach ($result as $rawArticle) {
                 $user = new User($rawArticle['id_user'], null, null, $rawArticle['email'], $rawArticle['login'], null, null);
                 $topic = new Topic($rawArticle['id_topic'], $rawArticle['topic']);
-                array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic));
+                array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic, $rawArticle['auditcd'], $rawArticle['auditmd']));
             }
             /*ob_start();
             var_dump($article);
             error_log(ob_get_clean());*/
             return $article;
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             return 'Error: ' . $e->getMessage();
         }
     }
 
-    public function getArticlesByTopicId(int $id_topic) :array{
+    public function getArticlesByTopicId(int $id_topic): array
+    {
         try {
             $stmt = $this->database->connect()->prepare(
                 'SELECT * FROM article a inner join topic t on a.id_topic = t.id_topic inner join user u on a.owner = u.id_user where t.id_topic = :id_topic');
@@ -49,21 +50,21 @@ class ArticleMapper
 
             $article = [];
             foreach ($result as $rawArticle) {
-                $user = new User($rawArticle['id_user'], null, null, $rawArticle['email'], $rawArticle['login'], null, null);
+                $user = new User($rawArticle['id_user'], null, null, $rawArticle['email'], $rawArticle['login'], null);
                 $topic = new Topic($rawArticle['id_topic'], $rawArticle['topic']);
-                array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic));
+                array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic, $rawArticle['auditcd'], $rawArticle['auditmd']));
             }
             /*ob_start();
             var_dump($article);
             error_log(ob_get_clean());*/
             return $article;
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             return 'Error: ' . $e->getMessage();
         }
     }
 
-    public function createNewArticle(string $title, string $content, int $owner, int $id_topic):int {
+    public function createNewArticle(string $title, string $content, int $owner, int $id_topic): int
+    {
         try {
             $connection = $this->database->connect();
 
@@ -76,7 +77,30 @@ class ArticleMapper
             $stmt->execute();
             return $connection->lastInsertId();
         } catch (PDOException $e) {
-            return 'Error '.$e->getMessage();
+            return 'Error ' . $e->getMessage();
+        }
+    }
+
+    public function getArticleById(int $id_article)
+    {
+        try {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT * FROM article a inner join topic t on a.id_topic = t.id_topic inner join user u on a.owner = u.id_user where a.id_article = :id_article');
+            $stmt->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            ob_start();
+            var_dump($result);
+            error_log(ob_get_clean());
+            $user = new User($result['id_user'], null, null, $result['email'], $result['login'], null);
+            $topic = new Topic($result['id_topic'], $result['topic']);
+            return new Article($result['id_article'], $result['title'], $result['content'], $user, $topic, $result['auditcd'], $result['auditmd']);
+            /*ob_start();
+            var_dump($article);
+            error_log(ob_get_clean());*/
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
         }
     }
 }

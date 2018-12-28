@@ -5,7 +5,7 @@ require_once 'Role.php';
 require_once 'Address.php';
 require_once 'UserDetails.php';
 require_once 'UserDetailsMapper.php';
-require_once __DIR__.'/../Database.php';
+require_once __DIR__ . '/../Database.php';
 
 class UserMapper
 {
@@ -18,7 +18,8 @@ class UserMapper
 
     public function getUser(
         string $login
-    ):User {
+    ): User
+    {
         try {
             $stmt = $this->database->connect()->prepare(
                 'SELECT * FROM user u 
@@ -36,13 +37,13 @@ class UserMapper
             $address = new Address($result['id_address'], $result['postal_code'], $result['street'], $result['locality'], $result['number']);
             $user_details = new UserDetails($result['id_user_details'], $address, $result['name'], $result['surname'], $result['phone']);
             return new User($result['id_user'], $user_details, $role, $result['email'], $result['login'], $result['password']);
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             return 'Error: ' . $e->getMessage();
         }
     }
 
-    public function createUser(string $login, string $email, string $password) {
+    public function createUser(string $login, string $email, string $password)
+    {
         try {
             $userDetailsMapper = new UserDetailsMapper();
             $idUserDetails = $userDetailsMapper->insertUserDetails(1);//początkowy adres przypisany każdemu userowi
@@ -58,30 +59,32 @@ class UserMapper
             $stmt->bindParam(':password', $password, PDO::PARAM_STR);
             return $stmt->execute();
         } catch (PDOException $e) {
-            return 'Error '.$e->getMessage();
+            return 'Error ' . $e->getMessage();
         }
 
     }
 
-    public function emailExist(string $email) {
+    public function emailExist(string $email)
+    {
         $stmt = $this->database->connect()->prepare(
             'SELECT * FROM user where email = :email');
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if(!$result) {
+        if (!$result) {
             return false;
         }
         return true;
     }
 
-    public function loginExist(string $login) {
+    public function loginExist(string $login)
+    {
         $stmt = $this->database->connect()->prepare(
             'SELECT * FROM user where login = :login');
         $stmt->bindParam(":login", $login, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if(!$result) {
+        if (!$result) {
             return false;
         }
         return true;

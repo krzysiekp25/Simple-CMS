@@ -9,13 +9,18 @@ class Article
     private $owner;
     private $topic;
 
-    public function __construct($id_article, $title, $content, $owner, $topic)
+    private $auditcd;
+    private $auditmd;
+
+    public function __construct($id_article, $title, $content, $owner, $topic, $auditcd = null, $auditmd = null)
     {
         $this->id_article = $id_article;
         $this->title = $title;
         $this->content = $content;
         $this->owner = $owner;
         $this->topic = $topic;
+        $this->auditcd = $auditcd;
+        $this->auditmd = $auditmd;
     }
 
     public function getIdArticle()
@@ -68,7 +73,25 @@ class Article
         $this->topic = $topic;
     }
 
+    public function getAuditcd()
+    {
+        return $this->auditcd;
+    }
 
+    public function setAuditcd($auditcd): void
+    {
+        $this->auditcd = $auditcd;
+    }
+
+    public function getAuditmd()
+    {
+        return $this->auditmd;
+    }
+
+    public function setAuditmd($auditmd): void
+    {
+        $this->auditmd = $auditmd;
+    }
 
 
 }

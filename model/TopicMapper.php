@@ -15,7 +15,8 @@ class TopicMapper
         $this->database = new Database();
     }
 
-    public function getAllTopics() :array{
+    public function getAllTopics(): array
+    {
         try {
             $stmt = $this->database->connect()->prepare(
                 'SELECT * FROM topic t');
@@ -31,25 +32,26 @@ class TopicMapper
             var_dump($topicList);
             error_log(ob_get_clean());*/
             return $topicList;
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             return 'Error: ' . $e->getMessage();
         }
     }
 
-    public function topicExist(string $topicName) :bool {
+    public function topicExist(string $topicName): bool
+    {
         $stmt = $this->database->connect()->prepare(
             'SELECT * FROM topic where topic = :topicName');
         $stmt->bindParam(":topicName", $topicName, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if(!$result) {
+        if (!$result) {
             return false;
         }
         return true;
     }
 
-    public function addTopic(string $topicName) :bool {
+    public function addTopic(string $topicName): bool
+    {
         $connection = $this->database->connect();
         $stmt = $connection->prepare(
             'INSERT INTO topic (topic) VALUES (:topicName)');

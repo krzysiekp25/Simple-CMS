@@ -15,7 +15,8 @@ class UserDetailsMapper
         $this->database = new Database();
     }
 
-    public function insertUserDetails(int $id_address, string $name = null, string $surname = null, int $phone = null) {
+    public function insertUserDetails(int $id_address, string $name = null, string $surname = null, int $phone = null)
+    {
         $connection = $this->database->connect();
         $stmt = $connection->prepare(
             'INSERT INTO user_details (id_address, name, surname, phone) VALUES (:id_address, :name, :surname, :phone)');
@@ -26,7 +27,6 @@ class UserDetailsMapper
         $stmt->execute();
         return $connection->lastInsertId();
     }
-
 
 
 }

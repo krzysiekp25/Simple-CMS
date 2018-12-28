@@ -9,11 +9,12 @@ class PlayerController extends AppController
 
     public function player()
     {
-        $this->render('player', [ 'videos' => $this->getVideos()]);
+        $this->render('player', ['videos' => $this->getVideos()]);
     }
 
-    private function getNotHidden(array $files) {
-        foreach($files as $key=>$file) {
+    private function getNotHidden(array $files)
+    {
+        foreach ($files as $key => $file) {
             if ($file[0] === '.') {
                 unset($files[$key]);
             };
@@ -21,6 +22,7 @@ class PlayerController extends AppController
         }
         return $files;
     }
+
     private function getVideos(): array
     {
         $files = scandir(dirname(__DIR__) . self::UPLOAD_DIRECTORY, SCANDIR_SORT_NONE);

@@ -55,7 +55,7 @@ class User
         $this->id_user = $id_user;
     }
 
-    public function getRole() : Role
+    public function getRole(): Role
     {
         return $this->role;
     }
@@ -65,7 +65,7 @@ class User
         $this->role = $role;
     }
 
-    public function getUserDetails() : UserDetails
+    public function getUserDetails(): UserDetails
     {
         return $this->user_details;
     }

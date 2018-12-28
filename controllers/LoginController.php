@@ -23,8 +23,8 @@ class LoginController extends AppController
         if ($this->isPost()) {
 
             $user = $mapper->getUser($_POST['login']);
-           /* var_dump($user);*/
-            if(empty($user->getIdUser())) {
+            /* var_dump($user);*/
+            if (empty($user->getIdUser())) {
                 return $this->render('login', ['loginErrorMessage' => 'Login not recognized']);
             }
 
@@ -41,7 +41,7 @@ class LoginController extends AppController
             }
         }
 
-        if(isset($_SESSION) && !empty($_SESSION)) {
+        if (isset($_SESSION) && !empty($_SESSION)) {
             $url = "http://$_SERVER[HTTP_HOST]/";
             header("Location: {$url}?page=home");
             exit();
@@ -60,7 +60,7 @@ class LoginController extends AppController
 
     public function register()
     {
-        if($this->isPost()) {
+        if ($this->isPost()) {
             $mapper = new UserMapper();
             $emailErrorMessage = null;
             $loginErrorMessage = null;
@@ -68,17 +68,16 @@ class LoginController extends AppController
 
             //todo sprawdzanie polityki haseł
             //todo sprawdzanie czy mejl jest mejlem
-            if($mapper->emailExist($_POST['email']))
-            {
+            if ($mapper->emailExist($_POST['email'])) {
                 $emailErrorMessage = 'Podany email jest już zajęty';
             }
-            if($mapper->loginExist($_POST['login'])) {
+            if ($mapper->loginExist($_POST['login'])) {
                 $loginErrorMessage = 'Podany login jest już zajęty';
             }
-            if($_POST['password'] != $_POST['password-confirmation']) {
+            if ($_POST['password'] != $_POST['password-confirmation']) {
                 $passwordErrorMessage = 'Podane hasła nie są identyczne';
             }
-            if($emailErrorMessage != null || $loginErrorMessage != null || $passwordErrorMessage != null) {
+            if ($emailErrorMessage != null || $loginErrorMessage != null || $passwordErrorMessage != null) {
                 $this->render('register', ['emailErrorMessage' => $emailErrorMessage, 'loginErrorMessage' => $loginErrorMessage, 'passwordErrorMessage' => $passwordErrorMessage]);
                 exit();
             }

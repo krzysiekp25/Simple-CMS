@@ -13,17 +13,17 @@ class SessionDBHandler
 {
     private $mapper;
 
-    function __construct ()
+    function __construct()
     {
         $this->mapper = new SessionMapper();
 
         session_set_save_handler(
-            array($this,'open'),
-            array($this,'close'),
-            array($this,'read'),
-            array($this,'write'),
-            array($this,'destroy'),
-            array($this,'gc')
+            array($this, 'open'),
+            array($this, 'close'),
+            array($this, 'read'),
+            array($this, 'write'),
+            array($this, 'destroy'),
+            array($this, 'gc')
         );
 
         session_start();
@@ -31,7 +31,7 @@ class SessionDBHandler
 
     public function open()
     {
-        if($this->mapper) {
+        if ($this->mapper) {
             return true;
         }
         return false;
@@ -40,7 +40,7 @@ class SessionDBHandler
     public function read($id)
     {
         $session = $this->mapper->getSessionById($id);
-        if(is_null($session->getData())) {
+        if (is_null($session->getData())) {
             return '';
         } else {
             return $session->getData();
@@ -67,6 +67,7 @@ class SessionDBHandler
     {
         return true;
     }
+
     public function close()
     {
         return true;

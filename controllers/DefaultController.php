@@ -1,11 +1,11 @@
 <?php
 
 require_once "AppController.php";
-require_once __DIR__.'/../model/User.php';
-require_once __DIR__.'/../model/UserMapper.php';
-require_once __DIR__.'/../model/Article.php';
-require_once __DIR__.'/../model/ArticleMapper.php';
-require_once __DIR__.'/../model/TopicMapper.php';
+require_once __DIR__ . '/../model/User.php';
+require_once __DIR__ . '/../model/UserMapper.php';
+require_once __DIR__ . '/../model/Article.php';
+require_once __DIR__ . '/../model/ArticleMapper.php';
+require_once __DIR__ . '/../model/TopicMapper.php';
 
 
 class DefaultController extends AppController
