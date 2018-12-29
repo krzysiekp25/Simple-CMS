@@ -5,8 +5,8 @@
  * Date: 28.12.2018
  * Time: 17:51
  */
-require_once __DIR__.'/../Database.php';
-require_once __DIR__.'/Comment.php';
+require_once __DIR__ . '/../Database.php';
+require_once __DIR__ . '/Comment.php';
 
 class CommentMapper
 {
@@ -32,7 +32,8 @@ class CommentMapper
 
     }
 
-    public function getCommentsByArticleId(int $id_article) : array {
+    public function getCommentsByArticleId(int $id_article): array
+    {
         try {
             $connection = $this->database->connect();
             $stmt = $connection->prepare('SELECT * FROM comment c inner join user u on c.id_user = u.id_user where c.id_article = :id_article order by c.auditcd desc');
@@ -61,5 +62,26 @@ class CommentMapper
             return false;
         }
         return true;
+    }
+
+    public function getCommentOwnerId(int $id)
+    {
+        try {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT id_user FROM comment where id_comment = :id_comment');
+            $stmt->bindParam(":id_comment", $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC)['id_user'];
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function deleteComment(int $id)
+    {
+        $stmt = $this->database->connect()->prepare(
+            'DELETE FROM comment where id_comment = :id_comment');
+        $stmt->bindParam(":id_comment", $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

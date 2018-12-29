@@ -21,6 +21,24 @@ $(document).ready(function(){
             }
         })
     });
+    $(document).on('click', '.delete', function(){
+        var commentId = $(this).attr("id");
+        console.log(commentId);
+        $.ajax({
+            url: "/comment/delete_comments.php",
+            method: "POST",
+            data: 'id=' + commentId,
+            dataType: "JSON",
+            success:function(response) {
+                if(!response.error) {
+                    $('#message').html(response.message);
+                    showComments();
+                } else if(response.error){
+                    $('#message').html(response.message);
+                }
+            }
+        });
+    });
 });
 
 $(document).ready(showComments());
