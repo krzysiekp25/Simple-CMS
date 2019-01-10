@@ -1,10 +1,10 @@
 <?php
 
 require_once('controllers/DefaultController.php');
-require_once('controllers/UploadController.php');
-require_once('controllers/PlayerController.php');
 require_once('controllers/ArticleController.php');
 require_once('controllers/LoginController.php');
+require_once('controllers/CommentsController.php');
+require_once('controllers/AdminController.php');
 
 class Routing
 {
@@ -29,14 +29,6 @@ class Routing
                 'controller' => 'LoginController',
                 'action' => 'register'
             ],
-            'upload' => [
-                'controller' => 'UploadController',
-                'action' => 'upload'
-            ],
-            'player' => [
-                'controller' => 'PlayerController',
-                'action' => 'player'
-            ],
             'article' => [
                 'controller' => 'ArticleController',
                 'action' => 'article'
@@ -52,6 +44,30 @@ class Routing
             'topic' => [
                 'controller' => 'ArticleController',
                 'action' => 'topic'
+            ],
+            'comments' => [
+                'controller' => 'CommentsController',
+                'action' => 'postComment'
+            ],
+            'delete_comments' => [
+                'controller' => 'CommentsController',
+                'action' => 'deleteComment'
+            ],
+            'show_comments' => [
+                'controller' => 'CommentsController',
+                'action' => 'showComment'
+            ],
+            'admin' => [
+                'controller' => 'AdminController',
+                'action' => 'index'
+            ],
+            'admin_users' => [
+                'controller' => 'AdminController',
+                'action' => 'users'
+            ],
+            'admin_delete_user' => [
+                'controller' => 'AdminController',
+                'action' => 'userDelete'
             ]
         ];
     }

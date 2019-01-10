@@ -53,18 +53,17 @@
                 <?php if($commentsExists || isset($_SESSION) && !empty($_SESSION)) {
                 print('<h3>Komentarze</h3>');
                 }?>
-                <!--todo wyświetlać dla niezalogowanego usera tylko wtedy gdy istnieje jakiś komentarz -->
                 <?php if (isset($_SESSION) && !empty($_SESSION)) { ?>
                     <form method="POST" id="commentForm">
                         <div class="form-group">
-                        <textarea name="comment" id="comment" class="form-control" placeholder="Enter Comment" rows="5"
+                        <textarea name="comment" id="comment" class="form-control" placeholder="Wpisz komentarz" rows="5"
                                   required></textarea>
                         </div>
                         <span id="message"></span>
                         <div class="form-group">
                             <input type="hidden" name="commentId" id="commentId" value="0"/>
                             <input type="submit" name="submit" id="submit" class="btn btn-primary"
-                                   value="Post Comment"/>
+                                   value="Zatwierdź"/>
                         </div>
                     </form>
                 <?php } ?>
@@ -79,6 +78,6 @@
 <footer class="container-fluid text-center">
     <?php include(dirname(__DIR__) . '/Template/footer.php'); ?>
 </footer>
-<script src="/comment/comments.js"></script>
+<script src="/public/scripts/comments.js"></script>
 </body>
 </html>

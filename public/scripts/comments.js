@@ -5,7 +5,7 @@ $(document).ready(function(){
         var formData = $(this).serialize();
         console.log(formData);
         $.ajax({
-            url: "/comment/comments.php",
+            url: "?page=comments",
             method: "POST",
             data: formData + '&id=' + id,
             dataType: "JSON",
@@ -25,7 +25,7 @@ $(document).ready(function(){
         var commentId = $(this).attr("id");
         console.log(commentId);
         $.ajax({
-            url: "/comment/delete_comments.php",
+            url: "?page=delete_comments",
             method: "POST",
             data: 'id=' + commentId,
             dataType: "JSON",
@@ -46,7 +46,7 @@ $(document).ready(showComments());
 function showComments() {
     var id = getUrlParameter('id');
     $.ajax({
-        url:"/comment/show_comments.php",
+        url:"?page=show_comments",
         method:"POST",
         data: { id: id},
         success:function(response) {

@@ -20,10 +20,9 @@ class DefaultController extends AppController
         $articleMapper = new ArticleMapper();
         $topicMapper = new TopicMapper();
 
-        $text = 'Hello there 👋';
         $articleList = $articleMapper->getAllArticles();
         $topicList = $topicMapper->getAllTopics();
 
-        $this->render('home', ['text' => $text, 'articleList' => $articleList, 'topicList' => $topicList]);
+        $this->render('home', ['articleList' => $articleList, 'topicList' => $topicList]);
     }
 }

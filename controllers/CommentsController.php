@@ -6,29 +6,26 @@
  * Time: 17:46
  */
 require_once __DIR__ . '/../model/CommentMapper.php';
-require_once __DIR__ . '/../session/SessionDBHandler.php';
 
-class CommentsController
+class CommentsController extends AppController
 {
-
-    private $sessionHandler;
 
     public function postComment()
     {
         if (!empty($_POST["comment"]) && !empty($_POST['id'])) {
-            $this->sessionHandler = new SessionDBHandler();
+
             ob_start();
             var_dump($_SESSION);
             error_log(ob_get_clean());
             $mapper = new CommentMapper();
             $mapper->addComment($_POST['id'], $_POST["comment"], $_SESSION['id']);
-            $message = '<label class="text-success">Comment posted Successfully.</label>';
+            $message = '<label class="text-success">Dodano komentarz.</label>';
             $status = array(
                 'error' => 0,
                 'message' => $message
             );
         } else {
-            $message = '<label class="text-danger">Error: Comment not posted.</label>';
+            $message = '<label class="text-danger">Błąd: Dodawanie komentarza przerwane.</label>';
             $status = array(
                 'error' => 1,
                 'message' => $message
@@ -40,7 +37,6 @@ class CommentsController
     public function showComment()
     {
         if (!empty($_POST['id'])) {
-            $this->sessionHandler = new SessionDBHandler();//todo na podstawie sesji wyczaic dla którego komentarza jestem wlascicielem i dodac opcję usunięcia
             ob_start();
             var_dump($_SESSION);
             error_log(ob_get_clean());
@@ -50,21 +46,20 @@ class CommentsController
             $commentHTML = '';
             /* @var $comment Comment */
             foreach ($commentList as $comment) {
-                $commentHTML .= '<div class="panel panel-primary">
-<div class="panel-heading">By <b>' . $comment->getUserLogin() . '</b> on <i>' . date("m/d/Y G:i", strtotime($comment->getAuditcd())) . '</i></div>
-<div class="panel-body">' . $comment->getComment() . '</div>';
+                $commentHTML .= '<div class="card"><div class="card-header">Autor: <b>' . $comment->getUserLogin() . '</b> dnia: <i>' . date("d/m/Y G:i", strtotime($comment->getAuditcd())) . '</i>';
                 if(isset($_SESSION) && !empty($_SESSION)) {
                     if ($_SESSION['id'] == $comment->getIdUser() || $_SESSION['role'] == 'admin') {
-                        $commentHTML .= '<div class="panel-footer" align="right"><button type="button" class="btn btn-primary delete" id="' . $comment->getIdComment() . '"><i class="fas fa-trash-alt"></i></button></div>';
+                        $commentHTML .= '<button type="button" style="float: right" class="btn btn-primary delete" id="' . $comment->getIdComment() . '"><i class="fas fa-trash-alt"></i></button>';
                     }
                 }
-                $commentHTML .= '</div> ';
+                $commentHTML .= '</div> <div class="card-body">' . $comment->getComment() . '</div>';
+
                 ob_start();
                 var_dump($mapper->getCommentOwnerId($_POST['id']));
                 error_log(ob_get_clean());
             }
         } else {
-            $message = '<label class="text-danger">Error: Comment not posted.</label>';
+            $message = '<label class="text-danger">Błąd: Dodawanie komentarza przerwane.</label>';
             $status = array(
                 'error' => 1,
                 'message' => $message
@@ -75,8 +70,7 @@ class CommentsController
 
     public function deleteComment()
     {
-        $this->sessionHandler = new SessionDBHandler();
-        if (strtolower($_SERVER['REQUEST_METHOD']) === 'post') {
+        if ($this->isPost()) {
             if (isset($_SESSION) && !empty($_SESSION)) {
                 $mapper = new CommentMapper();
                 ob_start();

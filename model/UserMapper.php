@@ -42,6 +42,47 @@ class UserMapper
         }
     }
 
+    public function getUserById(
+        int $id
+    ): User
+    {
+        try {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT * FROM user u 
+                          inner join role r on u.id_role = r.id_role WHERE u.id_user = :id_user;');
+            $stmt->bindParam(':id_user', $id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            /*ob_start();
+            var_dump($result);
+            error_log(ob_get_clean());*/
+            $role = new Role($result['id_role'], $result['role']);
+            return new User($result['id_user'], 1, $role, $result['email'], $result['login'], $result['password']);
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function getAllUsers(): array
+    {
+        try {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT * FROM user u inner join role r on u.id_role = r.id_role WHERE u.id_user != :id;');
+            $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            ob_start();
+            var_dump($result);
+            error_log(ob_get_clean());
+            return $result;
+
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
     public function createUser(string $login, string $email, string $password)
     {
         try {
@@ -88,5 +129,28 @@ class UserMapper
             return false;
         }
         return true;
+    }
+
+    public function deleteUserById(int $idUser)
+    {
+        try {
+            $connection = $this->database->connect();
+            $connection->beginTransaction();
+            $stmt1 = $connection->prepare(
+                'DELETE FROM comment WHERE id_user = :id_user');
+            $stmt1->bindParam(':id_user', $idUser, PDO::PARAM_INT);
+            $stmt1->execute();
+            $stmt2 = $connection->prepare(
+                'DELETE FROM article WHERE owner = :id_user');
+            $stmt2->bindParam(':id_user', $idUser, PDO::PARAM_INT);
+            $stmt2->execute();
+            $stmt3 = $connection->prepare(
+                'DELETE FROM user WHERE id_user = :id_user');
+            $stmt3->bindParam(':id_user', $idUser, PDO::PARAM_INT);
+            $stmt3->execute();
+            return $connection->commit();
+        } catch (Exception $e) {
+            return 'Error ' . $e->getMessage();
+        }
     }
 }
