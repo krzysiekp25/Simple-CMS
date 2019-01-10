@@ -32,7 +32,6 @@ class LoginController extends AppController
                 return $this->render('login', ['passwordErrorMessage' => 'Wrong password']);
             } else {
                 $_SESSION["id"] = $user->getIdUser();
-                $_SESSION['name'] = $user->getUserDetails()->getName();
                 $_SESSION["role"] = $user->getRole()->getRole();
 
                 $url = "http://$_SERVER[HTTP_HOST]/";
@@ -87,7 +86,6 @@ class LoginController extends AppController
 
             $user = $mapper->getUser($_POST['login']);
             $_SESSION["id"] = $user->getIdUser();
-            $_SESSION['name'] = $user->getUserDetails()->getName();
             $_SESSION["role"] = $user->getRole()->getRole();
 
             $this->render('successful_registration', ['message' => ['Rejestracja zakończona pomyślnie!']]);

@@ -25,7 +25,7 @@ class ArticleMapper
 
             $article = [];
             foreach ($result as $rawArticle) {
-                $user = new User($rawArticle['id_user'], null, null, $rawArticle['email'], $rawArticle['login'], null, null);
+                $user = new User($rawArticle['id_user'], null, $rawArticle['email'], $rawArticle['login'], null);
                 $topic = new Topic($rawArticle['id_topic'], $rawArticle['topic']);
                 array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic, $rawArticle['auditcd'], $rawArticle['auditmd']));
             }
@@ -50,7 +50,7 @@ class ArticleMapper
 
             $article = [];
             foreach ($result as $rawArticle) {
-                $user = new User($rawArticle['id_user'], null, null, $rawArticle['email'], $rawArticle['login'], null);
+                $user = new User($rawArticle['id_user'], null, $rawArticle['email'], $rawArticle['login'], null);
                 $topic = new Topic($rawArticle['id_topic'], $rawArticle['topic']);
                 array_push($article, new Article($rawArticle['id_article'], $rawArticle['title'], $rawArticle['content'], $user, $topic, $rawArticle['auditcd'], $rawArticle['auditmd']));
             }
@@ -93,7 +93,7 @@ class ArticleMapper
             ob_start();
             var_dump($result);
             error_log(ob_get_clean());
-            $user = new User($result['id_user'], null, null, $result['email'], $result['login'], null);
+            $user = new User($result['id_user'], null, $result['email'], $result['login'], null);
             $topic = new Topic($result['id_topic'], $result['topic']);
             return new Article($result['id_article'], $result['title'], $result['content'], $user, $topic, $result['auditcd'], $result['auditmd']);
             /*ob_start();

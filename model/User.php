@@ -6,7 +6,6 @@ class User
     private $id_user;
 
     //Encje w relacji
-    private $user_details;
     private $role;
 
 
@@ -14,10 +13,9 @@ class User
     private $login;
     private $password;
 
-    public function __construct($id_user, $user_details, $role, $email, $login, $password)
+    public function __construct($id_user, $role, $email, $login, $password)
     {
         $this->id_user = $id_user;
-        $this->user_details = $user_details;
         $this->role = $role;
         $this->email = $email;
         $this->login = $login;
@@ -63,16 +61,6 @@ class User
     public function setRole($role): void
     {
         $this->role = $role;
-    }
-
-    public function getUserDetails(): UserDetails
-    {
-        return $this->user_details;
-    }
-
-    public function setUserDetails($user_details): void
-    {
-        $this->user_details = $user_details;
     }
 
     public function getLogin()

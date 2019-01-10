@@ -52,6 +52,7 @@ class TopicMapper
 
     public function addTopic(string $topicName): bool
     {
+        $topicName = ucwords($topicName);
         $connection = $this->database->connect();
         $stmt = $connection->prepare(
             'INSERT INTO topic (topic) VALUES (:topicName)');
