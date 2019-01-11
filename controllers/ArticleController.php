@@ -93,4 +93,36 @@ class ArticleController extends AppController
         $this->render('topic', ['articleList' => $articleList, 'topicName' => $topicName, 'topicList' => $topicList]);
     }
 
+    public function deleteArticle() {
+
+        if ($this->isPost()) {
+            if (isset($_SESSION) && !empty($_SESSION)) {
+                $mapper = new ArticleMapper();
+                ob_start();
+                var_dump($mapper->getArticleOwnerId($_POST['articleId']));
+                error_log(ob_get_clean());
+                ob_start();
+                var_dump($_SESSION['id']);
+                error_log(ob_get_clean());
+                if ($_SESSION['id'] == $mapper->getArticleOwnerId($_POST['articleId']) || $_SESSION['role'] == 'admin') {
+                    $mapper->deleteArticleById($_POST['articleId']);
+                    $message = 'Artykuł usunięty.';
+                    $status = array(
+                        'error' => 0,
+                        'message' => $message
+                    );
+                    echo json_encode($status);
+                    exit();
+                }
+            }
+        }
+        $message = 'Błąd: Brak uprawnień do usunięcia.';
+        $status = array(
+            'error' => 1,
+            'message' => $message
+        );
+        echo json_encode($status);
+        exit();
+
+    }
 }

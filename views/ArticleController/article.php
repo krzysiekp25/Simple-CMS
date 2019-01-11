@@ -27,7 +27,17 @@
             <?php
             /* @var $article Article */
             if (isset($article)) { ?>
-            <h1><?php print($article->getTitle()) ?></h1>
+            <h1>
+                <?php print($article->getTitle()) ?>
+                <?php
+                if (isset($_SESSION) && !empty($_SESSION)) {
+                    if ($_SESSION['id'] == $article->getOwner()->getIdUser() || $_SESSION['role'] == 'admin') {
+                        ?>
+                        <button class="btn btn-danger" type="button" onclick="deleteArticle()">
+                            <i class="fas fa-trash-alt"></i></button>
+                    <?php }
+                } ?>
+            </h1>
             <?php ?>
             <p>
                 <?php
@@ -50,13 +60,14 @@
             </div>
             <hr>
             <div class="container">
-                <?php if($commentsExists || isset($_SESSION) && !empty($_SESSION)) {
-                print('<h3>Komentarze</h3>');
-                }?>
+                <?php if ($commentsExists || isset($_SESSION) && !empty($_SESSION)) {
+                    print('<h3>Komentarze</h3>');
+                } ?>
                 <?php if (isset($_SESSION) && !empty($_SESSION)) { ?>
                     <form method="POST" id="commentForm">
                         <div class="form-group">
-                        <textarea name="comment" id="comment" class="form-control" placeholder="Wpisz komentarz" rows="5"
+                        <textarea name="comment" id="comment" class="form-control" placeholder="Wpisz komentarz"
+                                  rows="5"
                                   required></textarea>
                         </div>
                         <span id="message"></span>
@@ -79,5 +90,6 @@
     <?php include(dirname(__DIR__) . '/Template/footer.php'); ?>
 </footer>
 <script src="/public/scripts/comments.js"></script>
+<script src="/public/scripts/delete_article.js"></script>
 </body>
 </html>

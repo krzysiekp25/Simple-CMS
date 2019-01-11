@@ -103,4 +103,35 @@ class ArticleMapper
             return 'Error: ' . $e->getMessage();
         }
     }
+
+    public function deleteArticleById(int $id_article) {
+        try {
+            $connection = $this->database->connect();
+            $connection->beginTransaction();
+            $stmt1 = $connection->prepare(
+                'DELETE FROM comment WHERE id_article = :id_article');
+            $stmt1->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+            $stmt1->execute();
+
+            $stmt2 = $connection->prepare(
+                'DELETE FROM article WHERE id_article = :id_article');
+            $stmt2->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+            $stmt2->execute();
+            return $connection->commit();
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function getArticleOwnerId(int $id_article) {
+        try {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT owner FROM article where id_article = :id_article');
+            $stmt->bindParam(":id_article", $id_article, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC)['owner'];
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
 }
