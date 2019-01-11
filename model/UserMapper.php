@@ -122,9 +122,29 @@ class UserMapper
         try {
             $connection = $this->database->connect();
             $connection->beginTransaction();
+            $stmt0 = $connection->prepare('SELECT a.id_article FROM article a WHERE a.owner = :id_user');
+            $stmt0->bindParam(':id_user', $idUser, PDO::PARAM_INT);
+            $stmt0->execute();
+            $articleIdResult = $stmt0->fetchAll(PDO::FETCH_NUM);
+            $articleIdList = [];
+            foreach ($articleIdResult as $item) {
+                foreach ($item as $id) {
+                    array_push($articleIdList, $id);
+                }
+            }
+            ob_start();
+            var_dump($articleIdList);
+            error_log(ob_get_clean());
+            $inQuery = implode(',', array_fill(1, count($articleIdList), '?'));
+            ob_start();
+            var_dump($inQuery);
+            error_log(ob_get_clean());
             $stmt1 = $connection->prepare(
-                'DELETE FROM comment WHERE id_user = :id_user');
-            $stmt1->bindParam(':id_user', $idUser, PDO::PARAM_INT);
+                'DELETE FROM comment WHERE id_user = ? OR id_article IN (' . $inQuery . ')');
+            $stmt1->bindParam(1, $idUser, PDO::PARAM_INT);
+            foreach ($articleIdList as $k => $id) {
+                $stmt1->bindValue(($k + 2), $id);
+            }
             $stmt1->execute();
             $stmt2 = $connection->prepare(
                 'DELETE FROM article WHERE owner = :id_user');
