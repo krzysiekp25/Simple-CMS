@@ -17,8 +17,13 @@ class ArticleMapper
     public function getAllArticles(): array
     {
         try {
+            /*$stmt = $this->database->connect()->prepare(
+                'SELECT * FROM article a inner join topic t on a.id_topic = t.id_topic inner join user u on a.owner = u.id_user');*/
             $stmt = $this->database->connect()->prepare(
-                'SELECT * FROM article a inner join topic t on a.id_topic = t.id_topic inner join user u on a.owner = u.id_user');
+                'SELECT * FROM get_all_articles');
+            /*ob_start();
+            var_dump("wykonuje sie widok");
+            error_log(ob_get_clean());*/
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

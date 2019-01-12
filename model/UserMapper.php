@@ -18,9 +18,11 @@ class UserMapper
     ): User
     {
         try {
-            $stmt = $this->database->connect()->prepare(
+            /*$stmt = $this->database->connect()->prepare(
                 'SELECT * FROM user u 
-                          inner join role r on u.id_role = r.id_role WHERE u.login = :login;');
+                          inner join role r on u.id_role = r.id_role WHERE u.login = :login;');*/
+            $stmt = $this->database->connect()->prepare(
+                'SELECT * FROM get_user WHERE login = :login;');
             $stmt->bindParam(':login', $login, PDO::PARAM_STR);
             $stmt->execute();
 
