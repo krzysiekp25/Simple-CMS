@@ -33,14 +33,18 @@
                 if (isset($_SESSION) && !empty($_SESSION)) {
                     if ($_SESSION['id'] == $article->getOwner()->getIdUser() || $_SESSION['role'] == 'admin') {
                         ?>
+                        <button class="btn btn-primary" type="button" onclick="editArticle()">
+                            <i class="fas fa-edit"></i></button>
                         <button class="btn btn-danger" type="button" onclick="deleteArticle()">
                             <i class="fas fa-trash-alt"></i></button>
+
                     <?php }
                 } ?>
             </h1>
             <?php ?>
             <p>
                 <?php
+                print('Temat: ' . $article->getTopic()->getTopic() . '</br>');
                 print('Utworzono: ' . date("m/d/Y G:i", strtotime($article->getAuditcd())));
                 if ($article->getAuditcd() != $article->getAuditmd()) {
                     print('</br>Zmodyfikowano: ' . date("m/d/Y G:i", strtotime($article->getAuditmd())));
@@ -67,7 +71,7 @@
                     <form method="POST" id="commentForm">
                         <div class="form-group">
                         <textarea name="comment" id="comment" class="form-control" placeholder="Wpisz komentarz"
-                                  rows="5"
+                                  rows="5" maxlength="1000"
                                   required></textarea>
                         </div>
                         <span id="message"></span>

@@ -49,7 +49,7 @@ class CommentsController extends AppController
                 $commentHTML .= '<div class="card"><div class="card-header">Autor: <b>' . $comment->getUserLogin() . '</b> dnia: <i>' . date("d/m/Y G:i", strtotime($comment->getAuditcd())) . '</i>';
                 if(isset($_SESSION) && !empty($_SESSION)) {
                     if ($_SESSION['id'] == $comment->getIdUser() || $_SESSION['role'] == 'admin') {
-                        $commentHTML .= '<button type="button" style="float: right" class="btn btn-primary delete" id="' . $comment->getIdComment() . '"><i class="fas fa-trash-alt"></i></button>';
+                        $commentHTML .= '<button type="button" style="float: right" class="btn btn-danger delete" id="' . $comment->getIdComment() . '"><i class="fas fa-trash-alt"></i></button>';
                     }
                 }
                 $commentHTML .= '</div> <div class="card-body">' . $comment->getComment() . '</div>';

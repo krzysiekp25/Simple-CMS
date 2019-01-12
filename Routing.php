@@ -72,6 +72,10 @@ class Routing
             'delete_article' => [
                 'controller' => 'ArticleController',
                 'action' => 'deleteArticle'
+            ],
+            'delete_topic' => [
+                'controller' => 'ArticleController',
+                'action' => 'deleteTopic'
             ]
         ];
     }

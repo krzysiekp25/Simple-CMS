@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__.'/../model/CommentMapper.php';
+require_once __DIR__ . '/../model/CommentMapper.php';
+
 class ArticleController extends AppController
 {
     public function __construct()
@@ -93,7 +94,8 @@ class ArticleController extends AppController
         $this->render('topic', ['articleList' => $articleList, 'topicName' => $topicName, 'topicList' => $topicList]);
     }
 
-    public function deleteArticle() {
+    public function deleteArticle()
+    {
 
         if ($this->isPost()) {
             if (isset($_SESSION) && !empty($_SESSION)) {
@@ -124,5 +126,38 @@ class ArticleController extends AppController
         echo json_encode($status);
         exit();
 
+    }
+
+    public function deleteTopic()
+    {
+        if ($this->isPost()) {
+            if (isset($_SESSION) && !empty($_SESSION)) {
+                if ($_SESSION['role'] == 'admin') {
+                    $articleMapper = new ArticleMapper();
+                    if ($articleMapper->deleteTopicById($_POST['topicId'])) {
+                        $message = 'Artykuł usunięty.';
+                        $status = array(
+                            'error' => 0,
+                            'message' => $message
+                        );
+                    } else {
+                        $message = 'Wystąpił problem przy usuwaniu.';
+                        $status = array(
+                            'error' => 1,
+                            'message' => $message
+                        );
+                    }
+                    echo json_encode($status);
+                    exit();
+                }
+            }
+            $message = 'Błąd: Brak uprawnień do usunięcia.';
+            $status = array(
+                'error' => 1,
+                'message' => $message
+            );
+            echo json_encode($status);
+            exit();
+        }
     }
 }

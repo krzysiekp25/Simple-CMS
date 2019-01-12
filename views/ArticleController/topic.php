@@ -25,13 +25,17 @@
         </div>
         <div class="col-sm-11 text-left">
             <?php if (isset($topicName)) { ?>
-                <h1><?php print($topicName) ?></h1>
+                <h1><?php print($topicName) ?>
+                    <?php
+                    if (isset($_SESSION) && !empty($_SESSION)) {
+                        if ($_SESSION['role'] == 'admin') {
+                            ?>
+                            <button class="btn btn-danger" type="button" onclick="deleteTopic()">
+                                <i class="fas fa-trash-alt"></i></button>
+                        <?php }
+                    } ?>
+                </h1>
             <?php } ?>
-            <p>
-                <?php if (isset($text)) {
-                    print($text);
-                } ?>
-            </p>
             <hr>
             <?php
             //todo data dodania artykulu
@@ -63,6 +67,6 @@
 <footer class="container-fluid text-center">
     <?php include(dirname(__DIR__) . '/Template/footer.php'); ?>
 </footer>
-
+<script src="/public/scripts/delete_topic.js"></script>
 </body>
 </html>
