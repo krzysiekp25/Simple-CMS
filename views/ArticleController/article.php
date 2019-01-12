@@ -45,9 +45,9 @@
             <p>
                 <?php
                 print('Temat: ' . $article->getTopic()->getTopic() . '</br>');
-                print('Utworzono: ' . date("m/d/Y G:i", strtotime($article->getAuditcd())));
+                print('Utworzono: ' . date("d/m/Y G:i", strtotime($article->getAuditcd())));
                 if ($article->getAuditcd() != $article->getAuditmd()) {
-                    print('</br>Zmodyfikowano: ' . date("m/d/Y G:i", strtotime($article->getAuditmd())));
+                    print('</br>Zmodyfikowano: ' . date("d/m/Y G:i", strtotime($article->getAuditmd())));
                 }
                 ?>
             </p>
