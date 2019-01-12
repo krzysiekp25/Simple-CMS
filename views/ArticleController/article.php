@@ -33,8 +33,8 @@
                 if (isset($_SESSION) && !empty($_SESSION)) {
                     if ($_SESSION['id'] == $article->getOwner()->getIdUser() || $_SESSION['role'] == 'admin') {
                         ?>
-                        <button class="btn btn-primary" type="button" onclick="editArticle()">
-                            <i class="fas fa-edit"></i></button>
+                        <a href="?page=modify_article&id=<?php print($_GET['id']) ?>" class="btn btn-primary" type="button" onclick="editArticle()">
+                            <i class="fas fa-edit"></i></a>
                         <button class="btn btn-danger" type="button" onclick="deleteArticle()">
                             <i class="fas fa-trash-alt"></i></button>
 

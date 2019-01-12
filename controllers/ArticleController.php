@@ -160,4 +160,40 @@ class ArticleController extends AppController
             exit();
         }
     }
+
+    public function modifyArticle()
+    {
+        if (isset($_SESSION) && !empty($_SESSION)) {
+            ob_start();
+            var_dump($_GET);
+            error_log(ob_get_clean());
+            $articleMapper = new ArticleMapper();
+            if ($_SESSION['id'] == $articleMapper->getArticleOwnerId($_GET['id']) || $_SESSION['role'] == 'admin') {
+                if ($this->isPost()) {
+                    ob_start();
+                    var_dump($_POST);
+                    error_log(ob_get_clean());
+                    $articleMapper->modifyArticle($_POST['title_name'], $_POST['content'], $_POST['id_topic'], $_GET['id']);
+                    $url = "http://$_SERVER[HTTP_HOST]/";
+                    header("Location: {$url}?page=article&id=" . $_GET['id']);
+                    exit();
+                } else {
+                    ob_start();
+                    var_dump($_GET);
+                    error_log(ob_get_clean());
+                    $article = $articleMapper->getArticleById($_GET['id']);
+                    $topicMapper = new TopicMapper();
+                    $topicList = $topicMapper->getAllTopics();
+                    $this->render('modify_article', ['topicList' => $topicList, 'article' => $article]);
+                    exit();
+                }
+            }
+        }
+        ob_start();
+        var_dump($_GET);
+        error_log(ob_get_clean());
+        $url = "http://$_SERVER[HTTP_HOST]/";
+        header("Location: {$url}?page=article&id=" . $_GET['id']);
+        exit();
+    }
 }

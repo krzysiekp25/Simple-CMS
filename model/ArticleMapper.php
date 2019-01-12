@@ -101,7 +101,8 @@ class ArticleMapper
         }
     }
 
-    public function deleteArticleById(int $id_article) {
+    public function deleteArticleById(int $id_article)
+    {
         try {
             $connection = $this->database->connect();
             $connection->beginTransaction();
@@ -120,7 +121,8 @@ class ArticleMapper
         }
     }
 
-    public function getArticleOwnerId(int $id_article) {
+    public function getArticleOwnerId(int $id_article)
+    {
         try {
             $stmt = $this->database->connect()->prepare(
                 'SELECT owner FROM article where id_article = :id_article');
@@ -153,7 +155,7 @@ class ArticleMapper
             }
 
             //DELETING ARTICLE LIST
-            /* @var $article Article*/
+            /* @var $article Article */
             foreach ($articleList as $article) {
                 $articleId = $article->getIdArticle();
                 $stmt2 = $connection->prepare(
@@ -180,5 +182,20 @@ class ArticleMapper
         }
 
 
+    }
+
+    public function modifyArticle($title_name, $content, $id_topic, $id_article)
+    {
+        try {
+            $stmt = $this->database->connect()->prepare(
+                'UPDATE article SET title = :title, content = :content, id_topic = :id_topic WHERE id_article = :id_article');
+            $stmt->bindParam(':title', $title_name, PDO::PARAM_STR);
+            $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+            $stmt->bindParam(':id_topic', $id_topic, PDO::PARAM_INT);
+            $stmt->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
     }
 }
