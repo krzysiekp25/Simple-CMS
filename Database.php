@@ -15,16 +15,14 @@ class Database
         $this->servername = SERVERNAME;
         $this->username = USERNAME;
         $this->password = PASSWORD;
-        $this->database = $this->username;
+        $this->database = DB_NAME;
     }
 
     public function connect()
     {
         try {
             return new PDO("mysql:host=$this->servername;dbname=$this->database", $this->username, $this->password);
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             return 'Connection failed: ' . $e->getMessage();
         }
     }

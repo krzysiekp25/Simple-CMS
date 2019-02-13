@@ -1,15 +1,19 @@
 <?php
 
+require_once __DIR__ . '/../session/SessionDBHandler.php';
+
 class AppController
 {
     const UPLOAD_DIRECTORY = '/public/upload/';
 
     private $request = null;
+    private $sessionHandler;
 
     public function __construct()
     {
         $this->request = strtolower($_SERVER['REQUEST_METHOD']);
-        session_start();
+        $this->sessionHandler = new SessionDBHandler();
+
     }
 
     public function isGet()
@@ -24,18 +28,18 @@ class AppController
 
     public function render(string $fileName = null, $variables = [])
     {
-        $view = $fileName ? dirname(__DIR__).'/views/'.get_class($this).'/'.$fileName.'.php' : '';
+        $view = $fileName ? dirname(__DIR__) . '/views/' . get_class($this) . '/' . $fileName . '.php' : '';
 
         $output = 'There isn\'t such file to open';
 
-            if (file_exists($view)) {
+        if (file_exists($view)) {
 
-                extract($variables);
+            extract($variables);
 
-                ob_start();
-                include $view;
-                $output = ob_get_clean();
-            }
+            ob_start();
+            include $view;
+            $output = ob_get_clean();
+        }
 
         print $output;
     }

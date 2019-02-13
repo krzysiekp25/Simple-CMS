@@ -2,42 +2,26 @@
 
 class User
 {
+
     private $id_user;
-    private $name;
-    private $surname;
-    private $email;
-    private $password;
+
+    //Encje w relacji
     private $role;
 
-    public function __construct($id_user, $name, $surname, $email, $password, $role)
+
+    private $email;
+    private $login;
+    private $password;
+
+    public function __construct($id_user, $role, $email, $login, $password)
     {
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->email = $email;
-        $this->password = $password;
         $this->id_user = $id_user;
         $this->role = $role;
+        $this->email = $email;
+        $this->login = $login;
+        $this->password = $password;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    public function setSurname($surname): void
-    {
-        $this->surname = $surname;
-    }
 
     public function getEmail()
     {
@@ -69,7 +53,7 @@ class User
         $this->id_user = $id_user;
     }
 
-    public function getRole()
+    public function getRole(): Role
     {
         return $this->role;
     }
@@ -78,5 +62,16 @@ class User
     {
         $this->role = $role;
     }
+
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    public function setLogin($login): void
+    {
+        $this->login = $login;
+    }
+
 
 }
